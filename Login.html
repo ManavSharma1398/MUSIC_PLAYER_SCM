@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="logincss.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <form id="loginForm" onsubmit="return validateLogin(event)">
+            <div class="login-box">
+                <div class="login-header">
+                    <span>Login</span>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" id="user" class="input-field" required>
+                    <label for="user" class="label">Username</label>
+                    <i class="bx bx-user icon"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="pass" class="input-field" required>
+                    <label for="pass" class="label">Password</label>
+                    <i class="bx bx-lock-alt icon" id="show-password" onclick="togglePasswordVisibility()"></i>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <div class="forgot">
+                        <a href="#">Forgot password</a>
+                    </div>
+                </div>
+
+                <!-- Error message for invalid login -->
+                <span id="loginError" style="color: red; font-size: 12px;"></span>
+
+                <div class="input-box">
+                    <input type="submit" class="input-submit" value="Login">
+                </div>
+
+                <div class="register">
+                    <span>Don't have an account? <a href="register.html">Register</a></span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Login validation
+        function validateLogin(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Get the entered username and password
+            const enteredName = document.getElementById('user').value;
+            const enteredPassword = document.getElementById('pass').value;
+
+            // Retrieve stored data from localStorage
+            const storedName = localStorage.getItem('userName');
+            const storedPassword = localStorage.getItem('userPassword');
+            
+            // Validate if the user exists and password matches
+            if (enteredName === storedName && enteredPassword === storedPassword) {
+                // If credentials match, show welcome message and redirect
+                alert(`Login successful! Welcome back, ${storedName}!`);
+                window.location.href = "Music.html"; // Redirect to another page after successful login
+            } else {
+                // If credentials don't match, show an error message
+                document.getElementById('loginError').textContent = "Invalid username or password.";
+            }
+        }
+
+        // Toggle password visibility
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('pass');
+            const icon = document.getElementById('show-password');
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.replace('bx-hide', 'bx-show');
+            } else {
+                passwordField.type = "password";
+                icon.classList.replace('bx-show', 'bx-hide');
+            }
+        }
+    </script>
+</body>
+
+</html>

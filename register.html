@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="logincss.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <form id="signupForm" onsubmit="return validateForm(event)">
+            <div class="login-box">
+                <div class="login-header">
+                    <span>Sign up</span>
+                </div>
+
+                <div class="input-box">
+                    <input type="text" id="name" class="input-field" name="name" required> 
+                    <label for="name" class="label">Name</label>
+                </div>
+
+                <div class="input-box">
+                    <input type="email" id="email" class="input-field" name="email" required>
+                    <label for="email" class="label">Email</label>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="password" class="input-field" name="password" required>
+                    <label for="password" class="label">Password</label>
+                    <i class="bx bx-lock-alt icon" id="show-password"></i>
+                </div>
+
+                <div class="input-box">
+                    <input type="password" id="confirmPassword" class="input-field" name="confirmPassword" required>
+                    <label for="confirmPassword" class="label">Confirm Password</label>
+                </div>
+
+                <span id="error" class="error"></span>
+
+                <div class="input-box">
+                    <button type="submit" class="input-submit">Sign up</button>
+                </div>
+                
+                <div class="register">
+                    <span>Have an account? <a href="Login.html">Log in</a></span>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    // Password validation and form submission
+    function validateForm(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const errorElement = document.getElementById('error');
+        const submitButton = document.querySelector('.input-submit');
+
+        // Reset previous error
+        errorElement.textContent = "";
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            errorElement.textContent = "Passwords do not match. Please try again.";
+            errorElement.style.color = "red";
+            return false;
+        }
+
+        // Store the username and password in localStorage
+        localStorage.setItem('userName', document.getElementById('name').value);
+        localStorage.setItem('userPassword', password);
+
+        // Disable the submit button to prevent multiple clicks
+        submitButton.disabled = true;
+
+        // Simulate a success message
+        alert("Signup successful!");
+
+        // Redirect to login page
+        window.location.href = "Login.html";
+
+        return true;
+    }
+
+    // Toggle password visibility
+    document.getElementById('show-password').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const confirmPasswordField = document.getElementById('confirmPassword');
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            confirmPasswordField.type = "text";
+            this.classList.replace('bx-lock-alt', 'bx-lock-open-alt');
+        } else {
+            passwordField.type = "password";
+            confirmPasswordField.type = "password";
+            this.classList.replace('bx-lock-open-alt', 'bx-lock-alt');
+        }
+    });
+    </script>
+</body>
+
+</html>
